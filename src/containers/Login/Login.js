@@ -1,46 +1,27 @@
 import React, { Component } from 'react'
-import { Redirect } from 'react-router-dom'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import { rdAuth } from 'redux/modules/firebase'
-
+import { auth, provider, isLoggedIn } from 'api/firebase'
 
 class Login extends Component {
   componentDidMount() {
-    console.log(this.props.loggedIn)
-    // if (!this.state.user) {
-    //   auth.onAuthStateChanged((user) => {
-    //     if (user) {
-    //       this.setState({ user });
-    //     }
-    //   })
-    // }
+    if (isLoggedIn) {
+      window.location = '/'
+    }
   }
 
   handleLogin = () => {
-    this.props.rdAuth()
+    auth.signInWithPopup(provider)
+      .then(() => { window.location = '/' })
   }
 
   render() {
     return (
-      this.props.loggedIn ?
-        <Redirect push to='/' />
-        :
+      <div>
+        <h1>Login</h1>
+        {auth.currentUser && `${auth.currentUser.displayName}, you are logged in`} 
         <button onClick={this.handleLogin}>Login</button>
+      </div>
     );
   }
 }
 
-const mapStateToProps = ({ firebase }) => ({
-  user: firebase.user,
-  loggedIn: firebase.loggedIn,
-})
-
-const mapDispatchToProps = dispatch => ({
-  ...bindActionCreators({ rdAuth }, dispatch),
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Login)
+export default Login
