@@ -16,17 +16,17 @@ const breakpoints = {
 }
 
 export const theme = {
-  ...colours,
-  ...fonts,
-  ...breakpoints,
+  colours,
+  fonts,
+  breakpoints,
 }
 
 export default theme
 
 // eslint-disable-next-line
 injectGlobal`
-  @font-face {
-    font-family: '"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif';
+  body {
+    font-family: 'Roboto', "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: 300;
-  }
+}
 `

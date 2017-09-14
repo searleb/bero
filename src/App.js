@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom'
+import { MuiThemeProvider } from 'material-ui'
 import { ThemeProvider } from 'styled-components'
 import { Login } from 'containers'
 
@@ -35,13 +36,14 @@ class App extends Component {
     return (
       <BrowserRouter>
         <ThemeProvider theme={theme}>
-          <Switch>
-
-            <Route exact path='/' component={Home} />
-            <Route path='/login' component={Login} />
-            <Route path='/test' component={Test} />
-            <Route component={NotFound404} />
-          </Switch>
+          <MuiThemeProvider>
+            <Switch>
+              <Route exact path='/' component={Home} />
+              <Route path='/login' component={Login} />
+              <Route path='/test' component={Test} />
+              <Route component={NotFound404} />
+            </Switch>
+          </MuiThemeProvider>
         </ThemeProvider>
       </BrowserRouter>
     )

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { auth, provider, isLoggedIn } from 'api/firebase'
+import { RaisedButton } from 'material-ui'
 
 class Login extends Component {
   componentDidMount() {
@@ -18,7 +19,7 @@ class Login extends Component {
       <div>
         <h1>Login</h1>
         {auth.currentUser && `${auth.currentUser.displayName}, you are logged in`} 
-        <button onClick={this.handleLogin}>Login</button>
+        <RaisedButton onClick={this.handleLogin}>Login</RaisedButton>
       </div>
     );
   }
