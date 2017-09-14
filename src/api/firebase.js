@@ -13,4 +13,6 @@ firebase.initializeApp(config)
 
 export const provider = new firebase.auth.GoogleAuthProvider()
 export const auth = firebase.auth()
+export const isLoggedIn = auth.onAuthStateChanged(user => user !== null)
+
 export default firebase
