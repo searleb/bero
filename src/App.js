@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
 import { Login } from 'containers'
+
 import { theme } from './styled-components/theme'
 
 const NotFound404 = () => (
@@ -9,6 +10,10 @@ const NotFound404 = () => (
     <h1>404</h1>
     <Link to='/'>Home</Link>
   </div>
+)
+
+const Test = () => (
+  <h1>Test</h1>
 )
 
 const Home = () => (
@@ -31,8 +36,10 @@ class App extends Component {
       <BrowserRouter>
         <ThemeProvider theme={theme}>
           <Switch>
+
             <Route exact path='/' component={Home} />
-            <Route exact path='/login' component={Login} />
+            <Route path='/login' component={Login} />
+            <Route path='/test' component={Test} />
             <Route component={NotFound404} />
           </Switch>
         </ThemeProvider>

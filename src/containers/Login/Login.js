@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
-import { auth, provider, redirectIfLoggedIn } from 'api/firebase'
+import { auth, provider, isLoggedIn } from 'api/firebase'
 
 class Login extends Component {
   componentDidMount() {
-    redirectIfLoggedIn()
+    if (isLoggedIn) {
+      window.location = '/'
+    }
   }
 
   handleLogin = () => {
@@ -15,7 +17,7 @@ class Login extends Component {
     return (
       <div>
         <h1>Login</h1>
-        {auth.currentUser.displayName && `${auth.currentUser.displayName}, you are logged in`} 
+        {auth.currentUser && `${auth.currentUser.displayName}, you are logged in`} 
         <button onClick={this.handleLogin}>Login</button>
       </div>
     );
