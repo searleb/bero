@@ -17,20 +17,20 @@ class NavBar extends Component {
       PropTypes.bool,
     ]).isRequired,
   }
+
   componentDidMount() {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        this.props.signInSuccess(user)
+    auth.getRedirectResult().then((result) => {
+      if (result) {
+        this.props.signInSuccess(result.user)
+        writeUserData(result.user)
       }
-    });
+    }).catch((error) => {
+      Error(error)
+    })
   }
 
   handleSignIn = () => {
-    auth.signInWithPopup(provider)
-      .then((res) => {
-        this.props.signInSuccess(res)
-        writeUserData(res.user)
-      })
+    auth.signInWithRedirect(provider)
   }
 
   handleSignOut = () => {

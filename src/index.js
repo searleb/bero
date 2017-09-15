@@ -8,8 +8,11 @@ import 'normalize.css'
 import store from './redux/store'
 import registerServiceWorker from './registerServiceWorker'
 import App from './App'
+import { auth } from './api/firebase'
+import { signInSuccess } from './redux/modules/auth'
 
 const rootElem = document.getElementById('root')
+
 
 ReactDOM.render(
   <Provider store={store}>
@@ -30,5 +33,15 @@ if (module.hot) {
     )
   })
 }
+
+/**
+ * Firebase auth method, logs in the user on page refresh
+ * if they were previoulsy logged in
+ */
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    store.dispatch(signInSuccess(user))
+  }
+});
 
 registerServiceWorker()
