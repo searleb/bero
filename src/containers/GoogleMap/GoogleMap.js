@@ -36,7 +36,8 @@ class GoogleMap extends Component {
    */
   componentDidMount() {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(({ coords }) => {
+      navigator.geolocation.watchPosition(({ coords }) => {
+        console.log('location changed');
         this.setState({
           userLocation: {
             lat: coords.latitude,
