@@ -28,7 +28,6 @@ class NavBar extends Component {
   handleSignIn = () => {
     auth.signInWithPopup(provider)
       .then((res) => {
-        console.log(res)
         this.props.signInSuccess(res)
         writeUserData(res.user)
       })

@@ -1,11 +1,12 @@
 import React from 'react'
-import { NavBar } from 'containers'
+import { NavBar, GoogleMap } from 'containers'
+// import { Container } from 'components'
 
 const Home = () => (
-  <div>
+  <main>
     <NavBar />
-    <h1>Home</h1>
-  </div>
+    <GoogleMap />
+  </main>
 )
 
 export default Home
