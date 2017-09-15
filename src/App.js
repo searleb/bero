@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom'
 import { MuiThemeProvider } from 'material-ui'
 import { ThemeProvider } from 'styled-components'
-import { Login } from 'containers'
+import { Home } from 'pages'
 
 import { theme } from './styled-components/theme'
 
@@ -15,13 +15,6 @@ const NotFound404 = () => (
 
 const Test = () => (
   <h1>Test</h1>
-)
-
-const Home = () => (
-  <div>
-    <Link to='/login'>Login</Link>
-    <h1>Home</h1>
-  </div>
 )
 
 class App extends Component {
@@ -39,7 +32,6 @@ class App extends Component {
           <MuiThemeProvider>
             <Switch>
               <Route exact path='/' component={Home} />
-              <Route path='/login' component={Login} />
               <Route path='/test' component={Test} />
               <Route component={NotFound404} />
             </Switch>
