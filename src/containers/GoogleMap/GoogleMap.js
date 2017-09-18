@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import GoogleMapReact from 'google-map-react'
+import geolib from 'geolib'
+import { SearchBox } from 'components'
 // import { GoogleMarker } from 'components'
 
 const GoogleMarker = () => (
@@ -22,9 +24,13 @@ class GoogleMap extends Component {
      * @type {Object}
      */
     this.state = {
-      userLocation: {
+      user: {
         lat: -33.8688,
         lng: 151.2093,
+      },
+      dest: {
+        lat: '',
+        lng: '',
       },
     }
   }
@@ -37,9 +43,8 @@ class GoogleMap extends Component {
   componentDidMount() {
     if (navigator.geolocation) {
       navigator.geolocation.watchPosition(({ coords }) => {
-        console.log('location changed');
         this.setState({
-          userLocation: {
+          user: {
             lat: coords.latitude,
             lng: coords.longitude,
           },
@@ -50,21 +55,44 @@ class GoogleMap extends Component {
     }
   }
 
+  searchBox = (e) => {
+    this.setState({
+      dest: {
+        lat: e[0].geometry.location.lat(),
+        lng: e[0].geometry.location.lng(),
+      },
+    })
+
+    const distance = geolib.getDistance(
+      { latitude: this.state.user.lat, longitude: this.state.user.lng },
+      { latitude: this.state.dest.lat, longitude: this.state.dest.lng },
+    )
+    const bearing = geolib.getRhumbLineBearing(
+      { latitude: this.state.user.lat, longitude: this.state.user.lng },
+      { latitude: this.state.dest.lat, longitude: this.state.dest.lng },
+    )
+    console.log(distance, bearing);
+  }
+
   render() {
     return (
       <div style={{ width: '100vw', height: 'calc(100vh - 64px)' }}>
+        <SearchBox
+          placeholder='gimme'
+          onPlacesChanged={this.searchBox}
+        />
         <GoogleMapReact
           bootstrapURLKeys={{
             key: 'AIzaSyDKzdL8XZp-h4L672R336-i9x3fJ-V806o',
           }}
-          center={this.state.userLocation}
+          center={this.state.user}
           defaultZoom={14}
           hoverDistance={32 / 2}
         >
-          {/* markers.map() */}
-          <GoogleMarkerUser {...this.state.userLocation} />
-          <GoogleMarker lat={-33.8627684} lng={151.2093256} />
-          {/* <GoogleMarker lat={-33.8893835} lng={151.201285} content={'Mentally Friendly!!'} /> */}
+          <GoogleMarkerUser {...this.state.user} />
+          {this.state.dest.lng && this.state.dest.lat &&
+            <GoogleMarker lat={this.state.dest.lat} lng={this.state.dest.lng} />
+          }
         </GoogleMapReact>
       </div>
     )
