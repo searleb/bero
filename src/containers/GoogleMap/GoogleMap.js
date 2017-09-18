@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import GoogleMapReact from 'google-map-react'
-import geolib from 'geolib'
-import { SearchBox } from 'components'
-import { Compass } from 'containers'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { updateUserLocation } from 'redux/modules/location'
@@ -21,18 +18,19 @@ const GoogleMarkerUser = () => (
 
 class GoogleMap extends Component {
   static propTypes = {
-    markers: PropTypes.array,
+    updateUserLocation: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired,
+    dest: PropTypes.object.isRequired,
   }
 
   static defaultProps = {
-    markers: [],
   }
 
   /**
-   * Checks for geolocation support and asks user
-   * to provide their location
-   * @method componentDidMount
-   */
+  * Checks for geolocation support and asks user
+  * to provide their location
+  * @method componentDidMount
+  */
   componentDidMount() {
     if (navigator.geolocation) {
       navigator.geolocation.watchPosition(({ coords }) => {
@@ -44,35 +42,21 @@ class GoogleMap extends Component {
     } else {
       alert('This app ain\'t gonna work without your location!')
     }
+    // const distance = geolib.getDistance(
+    //   { latitude: this.props.user.lat, longitude: this.props.user.lng },
+    //   { latitude: this.props.dest.lat, longitude: this.props.dest.lng },
+    // )
+    // const bearing = geolib.getRhumbLineBearing(
+    //   { latitude: this.props.user.lat, longitude: this.props.user.lng },
+    //   { latitude: this.props.dest.lat, longitude: this.props.dest.lng },
+    // )
+    // console.log(distance, bearing);
   }
 
-  searchBox = (e) => {
-    this.setState({
-      dest: {
-        lat: e[0].geometry.location.lat(),
-        lng: e[0].geometry.location.lng(),
-      },
-    })
-
-    const distance = geolib.getDistance(
-      { latitude: this.props.user.lat, longitude: this.props.user.lng },
-      { latitude: this.props.dest.lat, longitude: this.props.dest.lng },
-    )
-    const bearing = geolib.getRhumbLineBearing(
-      { latitude: this.props.user.lat, longitude: this.props.user.lng },
-      { latitude: this.props.dest.lat, longitude: this.props.dest.lng },
-    )
-    console.log(distance, bearing);
-  }
 
   render() {
     return (
       <div style={{ width: '100vw', height: 'calc(100vh - 64px)' }}>
-        <SearchBox
-          placeholder='gimme'
-          onPlacesChanged={this.searchBox}
-        />
-        <Compass />
         <GoogleMapReact
           bootstrapURLKeys={{
             key: 'AIzaSyDKzdL8XZp-h4L672R336-i9x3fJ-V806o',
@@ -83,7 +67,7 @@ class GoogleMap extends Component {
         >
           <GoogleMarkerUser {...this.props.user} />
           {this.props.dest.lng && this.props.dest.lat &&
-            <GoogleMarker lat={this.props.dest.lat} lng={this.props.dest.lng} />
+          <GoogleMarker lat={this.props.dest.lat} lng={this.props.dest.lng} />
           }
         </GoogleMapReact>
       </div>

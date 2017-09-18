@@ -1,10 +1,11 @@
 import React from 'react'
-import { NavBar, GoogleMap } from 'containers'
+import { NavBar, GoogleMap, SearchBox } from 'containers'
 // import { Container } from 'components'
 
 const Home = () => (
   <main>
     <NavBar />
+    <SearchBox />
     <GoogleMap />
   </main>
 )

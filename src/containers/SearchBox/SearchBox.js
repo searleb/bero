@@ -1,18 +1,20 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import TextField from 'material-ui/TextField'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { updateDestinationLocation } from 'redux/modules/location'
 
-export default class SearchBox extends Component {
+class SearchBox extends Component {
   static propTypes = {
     placeholder: PropTypes.string,
-    onPlacesChanged: PropTypes.func.isRequired,
   }
   static defaultProps = {
     placeholder: 'Search',
   }
+
   componentDidMount() {
     const input = this.input.input
-    console.log(input);
     this.searchBox = new window.google.maps.places.SearchBox(input);
     this.searchBox.addListener('places_changed', this.onPlacesChanged);
   }
@@ -22,9 +24,11 @@ export default class SearchBox extends Component {
   }
 
   onPlacesChanged = () => {
-    if (this.props.onPlacesChanged) {
-      this.props.onPlacesChanged(this.searchBox.getPlaces());
-    }
+    const place = this.searchBox.getPlaces()
+    this.props.updateDestinationLocation({
+      lat: place[0].geometry.location.lat(),
+      lng: place[0].geometry.location.lng(),
+    })
   }
 
   render() {
@@ -39,3 +43,18 @@ export default class SearchBox extends Component {
     )
   }
 }
+
+function mapStateToProps({ location }) {
+  return {
+
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({updateDestinationLocation}, dispatch)
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SearchBox)
