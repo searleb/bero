@@ -1,0 +1,33 @@
+const UPDATE_USER_LOCATION = 'UPDATE_USER_LOCATION'
+
+export function updateUserLocation(location) {
+  return {
+    type: UPDATE_USER_LOCATION,
+    location,
+  }
+}
+
+const initialState = {
+  user: {
+    lat: -33.8688,
+    lng: 151.2093,
+  },
+  dest: {
+    lat: '',
+    lng: '',
+  },
+}
+
+const location = (state = initialState, action) => {
+  switch (action.type) {
+    case UPDATE_USER_LOCATION:
+      return {
+        ...state,
+        user: action.location,
+      }
+    default:
+      return state
+  }
+}
+
+export default location

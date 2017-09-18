@@ -3,7 +3,10 @@ import PropTypes from 'prop-types'
 import GoogleMapReact from 'google-map-react'
 import geolib from 'geolib'
 import { SearchBox } from 'components'
-// import { GoogleMarker } from 'components'
+import { Compass } from 'containers'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { updateUserLocation } from 'redux/modules/location'
 
 const GoogleMarker = () => (
   <span role='img' aria-label='finish' style={{ fontSize: '3em' }}>
@@ -17,22 +20,12 @@ const GoogleMarkerUser = () => (
 )
 
 class GoogleMap extends Component {
-  constructor(props) {
-    super(props)
-    /**
-     * Default map center location: Zip Office :)
-     * @type {Object}
-     */
-    this.state = {
-      user: {
-        lat: -33.8688,
-        lng: 151.2093,
-      },
-      dest: {
-        lat: '',
-        lng: '',
-      },
-    }
+  static propTypes = {
+    markers: PropTypes.array,
+  }
+
+  static defaultProps = {
+    markers: [],
   }
 
   /**
@@ -43,11 +36,9 @@ class GoogleMap extends Component {
   componentDidMount() {
     if (navigator.geolocation) {
       navigator.geolocation.watchPosition(({ coords }) => {
-        this.setState({
-          user: {
-            lat: coords.latitude,
-            lng: coords.longitude,
-          },
+        this.props.updateUserLocation({
+          lat: coords.latitude,
+          lng: coords.longitude,
         })
       })
     } else {
@@ -64,12 +55,12 @@ class GoogleMap extends Component {
     })
 
     const distance = geolib.getDistance(
-      { latitude: this.state.user.lat, longitude: this.state.user.lng },
-      { latitude: this.state.dest.lat, longitude: this.state.dest.lng },
+      { latitude: this.props.user.lat, longitude: this.props.user.lng },
+      { latitude: this.props.dest.lat, longitude: this.props.dest.lng },
     )
     const bearing = geolib.getRhumbLineBearing(
-      { latitude: this.state.user.lat, longitude: this.state.user.lng },
-      { latitude: this.state.dest.lat, longitude: this.state.dest.lng },
+      { latitude: this.props.user.lat, longitude: this.props.user.lng },
+      { latitude: this.props.dest.lat, longitude: this.props.dest.lng },
     )
     console.log(distance, bearing);
   }
@@ -81,17 +72,18 @@ class GoogleMap extends Component {
           placeholder='gimme'
           onPlacesChanged={this.searchBox}
         />
+        <Compass />
         <GoogleMapReact
           bootstrapURLKeys={{
             key: 'AIzaSyDKzdL8XZp-h4L672R336-i9x3fJ-V806o',
           }}
-          center={this.state.user}
+          center={this.props.user}
           defaultZoom={14}
           hoverDistance={32 / 2}
         >
-          <GoogleMarkerUser {...this.state.user} />
-          {this.state.dest.lng && this.state.dest.lat &&
-            <GoogleMarker lat={this.state.dest.lat} lng={this.state.dest.lng} />
+          <GoogleMarkerUser {...this.props.user} />
+          {this.props.dest.lng && this.props.dest.lat &&
+            <GoogleMarker lat={this.props.dest.lat} lng={this.props.dest.lng} />
           }
         </GoogleMapReact>
       </div>
@@ -99,12 +91,18 @@ class GoogleMap extends Component {
   }
 }
 
-GoogleMap.propTypes = {
-  markers: PropTypes.array,
+function mapStateToProps({ location }) {
+  return {
+    user: location.user,
+    dest: location.dest,
+  }
 }
 
-GoogleMap.defaultProps = {
-  markers: [],
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ updateUserLocation }, dispatch)
 }
 
-export default GoogleMap
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(GoogleMap)
