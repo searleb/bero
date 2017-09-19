@@ -21,8 +21,8 @@ const initialState = {
     lng: 151.2093,
   },
   dest: {
-    lat: '',
-    lng: '',
+    lat: 0,
+    lng: 0,
   },
 }
 

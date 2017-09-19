@@ -42,15 +42,6 @@ class GoogleMap extends Component {
     } else {
       alert('This app ain\'t gonna work without your location!')
     }
-    // const distance = geolib.getDistance(
-    //   { latitude: this.props.user.lat, longitude: this.props.user.lng },
-    //   { latitude: this.props.dest.lat, longitude: this.props.dest.lng },
-    // )
-    // const bearing = geolib.getRhumbLineBearing(
-    //   { latitude: this.props.user.lat, longitude: this.props.user.lng },
-    //   { latitude: this.props.dest.lat, longitude: this.props.dest.lng },
-    // )
-    // console.log(distance, bearing);
   }
 
 

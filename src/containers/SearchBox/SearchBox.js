@@ -8,6 +8,7 @@ import { updateDestinationLocation } from 'redux/modules/location'
 class SearchBox extends Component {
   static propTypes = {
     placeholder: PropTypes.string,
+    updateDestinationLocation: PropTypes.func.isRequired,
   }
   static defaultProps = {
     placeholder: 'Search',
@@ -44,14 +45,12 @@ class SearchBox extends Component {
   }
 }
 
-function mapStateToProps({ location }) {
-  return {
-
-  }
+function mapStateToProps() {
+  return {}
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({updateDestinationLocation}, dispatch)
+  return bindActionCreators({ updateDestinationLocation }, dispatch)
 }
 
 export default connect(
