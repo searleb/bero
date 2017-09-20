@@ -21,7 +21,8 @@ class SearchBox extends Component {
   }
 
   componentWillUnmount() {
-    this.searchBox.removeListener('places_changed', this.onPlacesChanged);
+    // https://developers.google.com/maps/documentation/javascript/events#removing
+    window.google.maps.event.clearInstanceListeners(this.searchBox);
   }
 
   onPlacesChanged = () => {

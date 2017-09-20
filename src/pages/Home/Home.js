@@ -6,7 +6,7 @@ const Home = () => (
   <main>
     <NavBar />
     <Container>
-      <SearchBox />
+      <SearchBox placeholder='Where are we going?' />
     </Container>
     <GoogleMap />
     <Compass />

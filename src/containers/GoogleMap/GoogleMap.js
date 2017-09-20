@@ -4,16 +4,14 @@ import GoogleMapReact from 'google-map-react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { updateUserLocation } from 'redux/modules/location'
+import Spinner from 'react-spinkit'
+import mapStyles from './map-styles'
 
 const GoogleMarker = () => (
-  <span role='img' aria-label='finish' style={{ fontSize: '3em' }}>
-    🏁
-  </span>
+  <Spinner name='ball-scale-ripple-multiple' color='cornsilk' />
 )
 const GoogleMarkerUser = () => (
-  <span role='img' aria-label='finish' style={{ fontSize: '3em' }}>
-    👋
-  </span>
+  <Spinner name='double-bounce' color='lightblue' />
 )
 
 class GoogleMap extends Component {
@@ -52,8 +50,11 @@ class GoogleMap extends Component {
           bootstrapURLKeys={{
             key: 'AIzaSyDKzdL8XZp-h4L672R336-i9x3fJ-V806o',
           }}
+          options={{
+            styles: mapStyles,
+          }}
           center={this.props.user}
-          defaultZoom={14}
+          defaultZoom={15}
           hoverDistance={32 / 2}
         >
           <GoogleMarkerUser {...this.props.user} />
