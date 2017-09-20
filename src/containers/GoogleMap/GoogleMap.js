@@ -8,7 +8,7 @@ import Spinner from 'react-spinkit'
 import mapStyles from './map-styles'
 
 const GoogleMarker = () => (
-  <Spinner name='ball-scale-ripple-multiple' color='cornsilk' />
+  <Spinner name='double-bounce' color='burlywood' />
 )
 const GoogleMarkerUser = () => (
   <Spinner name='double-bounce' color='lightblue' />
@@ -45,17 +45,17 @@ class GoogleMap extends Component {
 
   render() {
     return (
-      <div style={{ width: '100vw', height: 'calc(100vh - 64px)' }}>
+      <div style={{ width: '100vw', height: 'calc(100vh - 48px)' }}>
         <GoogleMapReact
           bootstrapURLKeys={{
             key: 'AIzaSyDKzdL8XZp-h4L672R336-i9x3fJ-V806o',
           }}
           options={{
             styles: mapStyles,
+            disableDefaultUI: true,
           }}
           center={this.props.user}
           defaultZoom={15}
-          hoverDistance={32 / 2}
         >
           <GoogleMarkerUser {...this.props.user} />
           {this.props.dest.lng && this.props.dest.lat &&

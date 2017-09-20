@@ -1,7 +1,9 @@
 import { injectGlobal } from 'styled-components'
 
 export const colors = {
-  brandPrimary: '#ff5005',
+  lightBlue: 'lightblue',
+  burlywood: 'burlywood',
+  white: '#ffffff',
 }
 
 const fonts = {
@@ -28,7 +30,9 @@ export default theme
 // eslint-disable-next-line
 injectGlobal`
   html, body {
-    height: 100%;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
   }
   body {
     font-family: 'Roboto', "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;

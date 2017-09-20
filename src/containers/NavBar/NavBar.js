@@ -12,7 +12,8 @@ import FlatButton from 'material-ui/FlatButton';
 import styled from 'styled-components'
 
 const TriggerWrapper = styled.div`
-  transform: translate(1.5em, 1.5em);
+  transform: translate(1.5em, -1.5em);
+  bottom: 0;
   z-index: 100;
   display: inline-block;
 `

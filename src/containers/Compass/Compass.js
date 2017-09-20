@@ -2,8 +2,20 @@ import React, { Component } from 'react'
 import throttle from 'lodash.throttle'
 import styled from 'styled-components'
 import geolib from 'geolib'
+import { Flex, Box } from 'grid-styled'
 import { connect } from 'react-redux'
+import Navigation from 'material-ui/svg-icons/maps/navigation'
 
+
+const CompassContainer = styled.div`
+  top: 48px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  z-index: 3;
+  color: white;
+`
 
 class Compass extends Component {
   constructor(props) {
@@ -12,7 +24,15 @@ class Compass extends Component {
       alpha: 0,
       compassBearing: {},
     };
+
+    this.pointerStyles = {
+      margin: '15px',
+      transition: 'ease 0.01s',
+      width: '75vw',
+      height: '75vh',
+    }
   }
+
   componentDidMount() {
     if (window.DeviceOrientationEvent) {
       this.getBearing()
@@ -54,26 +74,27 @@ class Compass extends Component {
 
   render() {
     return (
-      <div>
-        <span
-          role='img'
-          aria-label='emohi'
-          style={{
-            margin: '15px',
-            display: 'inline-block',
-            fontSize: '3em',
-            transition: 'ease 0.01s',
-            transform: `rotateZ(${this.state.alpha}deg)`,
-          }}
-        >👆</span>
-        <p>alpha: {this.state.alpha}</p>
-        <p>bearing: {this.state.bearing}</p>
-        <p>webkitCompassHeading: {this.state.webkitCompassHeading}</p>
-        <p>distance: {this.state.distance}</p>
-        <p>accuracy: {this.state.accuracy}</p>
-        <p>compassBearing: {this.state.compassBearing.exact}</p>
-      </div>
-    );
+      this.state.compassBearing.lat !== 0 &&
+      <CompassContainer>
+        <Flex align='center' justify='center'>
+          <Box>
+            <Navigation
+              style={{
+                ...this.pointerStyles,
+                transform: `rotateZ(${this.state.alpha}deg)`,
+              }}
+              color='white'
+            />
+          </Box>
+        </Flex>
+        {/* <p>alpha: {this.state.alpha}</p> */}
+        {/* <p>bearing: {this.state.bearing}</p> */}
+        {/* <p>webkitCompassHeading: {this.state.webkitCompassHeading}</p> */}
+        <p>distance: {this.state.distance}m</p>
+        {/* <p>accuracy: {this.state.accuracy}</p> */}
+        {/* <p>compassBearing: {this.state.compassBearing.exact}</p> */}
+      </CompassContainer>
+    )
   }
 }
 
