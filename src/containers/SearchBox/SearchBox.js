@@ -16,8 +16,12 @@ class SearchBox extends Component {
 
   componentDidMount() {
     const input = this.input.input
-    this.searchBox = new window.google.maps.places.SearchBox(input);
+    this.searchBox = new window.google.maps.places.SearchBox(input)
     this.searchBox.addListener('places_changed', this.onPlacesChanged);
+  }
+
+  componentWillReceiveProps({ bounds }) {
+    this.searchBox.setBounds(bounds)
   }
 
   componentWillUnmount() {
@@ -46,8 +50,11 @@ class SearchBox extends Component {
   }
 }
 
-function mapStateToProps() {
-  return {}
+function mapStateToProps({ location }) {
+  return {
+    user: location.user,
+    bounds: location.bounds,
+  }
 }
 
 function mapDispatchToProps(dispatch) {

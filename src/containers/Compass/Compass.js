@@ -64,7 +64,7 @@ class Compass extends Component {
       this.setState({
         alpha: alpha.toFixed(3),
         bearing,
-        distance,
+        distance: `${geolib.convertUnit('km', distance, 2)} kms`,
         compassBearing,
         webkitCompassHeading: event.webkitCompassHeading,
         accuracy: event.compassAccuracy || event.webkitCompassAccuracy || 0,
@@ -76,6 +76,7 @@ class Compass extends Component {
     return (
       this.state.compassBearing.lat !== 0 &&
       <CompassContainer>
+        <p>{this.state.distance}</p>
         <Flex align='center' justify='center'>
           <Box>
             <Navigation
@@ -90,7 +91,6 @@ class Compass extends Component {
         {/* <p>alpha: {this.state.alpha}</p> */}
         {/* <p>bearing: {this.state.bearing}</p> */}
         {/* <p>webkitCompassHeading: {this.state.webkitCompassHeading}</p> */}
-        <p>distance: {this.state.distance}m</p>
         {/* <p>accuracy: {this.state.accuracy}</p> */}
         {/* <p>compassBearing: {this.state.compassBearing.exact}</p> */}
       </CompassContainer>

@@ -1,5 +1,6 @@
 const UPDATE_USER_LOCATION = 'UPDATE_USER_LOCATION'
 const UPDATE_DESTINATION_LOCATION = 'UPDATE_DESTINATION_LOCATION'
+const UPDATE_BOUNDS = 'UPDATE_BOUNDS'
 
 export function updateUserLocation(location) {
   return {
@@ -12,6 +13,13 @@ export function updateDestinationLocation(location) {
   return {
     type: UPDATE_DESTINATION_LOCATION,
     location,
+  }
+}
+
+export function updateBounds(bounds) {
+  return {
+    type: UPDATE_BOUNDS,
+    bounds,
   }
 }
 
@@ -37,6 +45,11 @@ const location = (state = initialState, action) => {
       return {
         ...state,
         dest: action.location,
+      }
+    case UPDATE_BOUNDS:
+      return {
+        ...state,
+        bounds: action.bounds,
       }
     default:
       return state
