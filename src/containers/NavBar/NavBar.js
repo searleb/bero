@@ -12,6 +12,7 @@ import styled from 'styled-components'
 import Drawer from 'material-ui/Drawer'
 import MenuItem from 'material-ui/MenuItem'
 import AppBar from 'material-ui/AppBar'
+import { SearchBox } from 'containers'
 
 const TriggerWrapper = styled.div`
 transform: translate(1.5em, -1.5em);
@@ -60,11 +61,14 @@ class NavBar extends Component {
       <div>
         <Drawer
           docked={false}
-          width={260}
+          width={290}
           open={this.state.open}
           onRequestChange={open => this.setState({ open })}
         >
           <AppBar title='Bero' showMenuIconButton={false} />
+          <MenuItem>
+            <SearchBox placeholder='Where are we going?' />
+          </MenuItem>
           <MenuItem>
             {this.props.user ?
               <FlatButton

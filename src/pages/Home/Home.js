@@ -1,13 +1,9 @@
 import React from 'react'
-import { NavBar, GoogleMap, SearchBox, Compass } from 'containers'
-import { Container } from 'components'
+import { NavBar, GoogleMap, Compass } from 'containers'
 
 const Home = () => (
   <main>
     <NavBar />
-    <Container>
-      <SearchBox placeholder='Where are we going?' />
-    </Container>
     <GoogleMap />
     <Compass />
   </main>

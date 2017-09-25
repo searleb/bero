@@ -71,7 +71,7 @@ class GoogleMap extends Component {
 
   render() {
     return (
-      <div style={{ width: '100vw', height: 'calc(100vh - 48px)' }}>
+      <div style={{ width: '100vw', height: '100vh' }}>
         <GoogleMapReact
           ref={(c) => { this.map = c }}
           onChange={this.handleOnChange}
