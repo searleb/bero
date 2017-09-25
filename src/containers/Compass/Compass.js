@@ -8,7 +8,7 @@ import Navigation from 'material-ui/svg-icons/maps/navigation'
 
 
 const CompassContainer = styled.div`
-  top: 48px;
+  top: 0;
   left: 0;
   right: 0;
   bottom: 0;

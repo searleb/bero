@@ -1,5 +1,5 @@
-export { default as NavBar } from './NavBar/NavBar'
 export { default as BottomNav } from './BottomNav/BottomNav'
 export { default as GoogleMap } from './GoogleMap/GoogleMap'
 export { default as Compass } from './Compass/Compass'
 export { default as SearchBox } from './SearchBox/SearchBox'
+export { default as SignInSignOut } from './SignInSignOut/SignInSignOut'

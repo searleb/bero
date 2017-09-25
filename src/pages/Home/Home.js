@@ -1,5 +1,6 @@
 import React from 'react'
-import { NavBar, GoogleMap, Compass } from 'containers'
+import { GoogleMap, Compass } from 'containers'
+import { NavBar } from 'components'
 
 const Home = () => (
   <main>
