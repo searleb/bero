@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { RippleOverlay } from 'components'
 import PropTypes from 'prop-types'
 import { auth, provider, writeUserData } from 'api/firebase'
 import { connect } from 'react-redux'
@@ -8,14 +7,18 @@ import { signInSuccess, signOutSuccess } from 'redux/modules/auth'
 import Avatar from 'material-ui/Avatar'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import Menu from 'material-ui/svg-icons/navigation/menu'
-import FlatButton from 'material-ui/FlatButton';
+import FlatButton from 'material-ui/FlatButton'
 import styled from 'styled-components'
+import Drawer from 'material-ui/Drawer'
+import MenuItem from 'material-ui/MenuItem'
+import AppBar from 'material-ui/AppBar'
 
 const TriggerWrapper = styled.div`
-  transform: translate(1.5em, -1.5em);
-  bottom: 0;
-  z-index: 100;
-  display: inline-block;
+transform: translate(1.5em, -1.5em);
+bottom: 0;
+z-index: 100;
+display: inline-block;
+position: absolute;
 `
 
 class NavBar extends Component {
@@ -26,6 +29,11 @@ class NavBar extends Component {
       PropTypes.object,
       PropTypes.bool,
     ]).isRequired,
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = { open: false }
   }
 
   componentDidMount() {
@@ -39,44 +47,56 @@ class NavBar extends Component {
     })
   }
 
-  handleSignIn = () => {
-    auth.signInWithRedirect(provider)
-  }
+  handleSignIn = () => auth.signInWithRedirect(provider)
 
-  handleSignOut = () => {
-    auth.signOut()
-      .then(() => this.props.signOutSuccess())
-  }
+  handleSignOut = () => auth.signOut().then(() => this.props.signOutSuccess())
+
+  handleToggle = () => this.setState({ open: !this.state.open })
+
+  handleClose = () => this.setState({ open: false })
 
   render() {
     return (
-      <RippleOverlay
-        trigger={
-          <TriggerWrapper>
-            <FloatingActionButton>
-              <Menu />
-            </FloatingActionButton>
-          </TriggerWrapper>
-        }
-      >
-        {this.props.user ?
-          <FlatButton
-            label='Sign out'
-            onClick={this.handleSignOut}
-            icon={
-              <Avatar
-                src={this.props.user.photoURL}
-                size={30}
+      <div>
+        <Drawer
+          docked={false}
+          width={260}
+          open={this.state.open}
+          onRequestChange={open => this.setState({ open })}
+        >
+          <AppBar title='Bero' showMenuIconButton={false} />
+          <MenuItem>
+            {this.props.user ?
+              <FlatButton
+                label='Sign out'
+                onClick={this.handleSignOut}
+                fullWidth
+                primary
+                icon={
+                  <Avatar
+                    src={this.props.user.photoURL}
+                    size={30}
+                  />
+                }
+              />
+              :
+              <FlatButton
+                label='Sign In'
+                onClick={this.handleSignIn}
+                fullWidth
+                primary
               />
             }
-          />
-          :
-          <FlatButton
-            label='Sign In'
-            onClick={this.handleSignIn}
-          />
-        }
-      </RippleOverlay>
+          </MenuItem>
+          <MenuItem onClick={this.handleClose}>Menu Item</MenuItem>
+          <MenuItem onClick={this.handleClose}>Menu Item 2</MenuItem>
+        </Drawer>
+        <TriggerWrapper>
+          <FloatingActionButton onClick={this.handleToggle}>
+            <Menu />
+          </FloatingActionButton>
+        </TriggerWrapper>
+      </div>
     )
   }
 }

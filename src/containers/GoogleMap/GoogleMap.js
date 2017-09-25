@@ -8,12 +8,6 @@ import { updateUserLocation, updateBounds } from 'redux/modules/location'
 import Spinner from 'react-spinkit'
 import mapStyles from './map-styles'
 
-const size = {
-  width: 640, // Map width in pixels
-  height: 380, // Map height in pixels
-};
-
-
 const GoogleMarker = () => (
   <Spinner name='double-bounce' color='burlywood' />
 )
