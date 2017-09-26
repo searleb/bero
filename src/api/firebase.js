@@ -15,9 +15,7 @@ export const provider = new firebase.auth.GoogleAuthProvider()
 export const auth = firebase.auth()
 export const database = firebase.database()
 
-
 export default firebase
-
 
 export function writeUserData(user) {
   database.ref(`users/${user.uid}`).update({
@@ -25,6 +23,10 @@ export function writeUserData(user) {
     uid: user.uid,
     email: user.email,
   });
+}
+
+export function writeUserLocation(user, location) {
+  database.ref(`users/${user.uid}/location`).set({ ...location, lastSeen: Date.now() })
 }
 
 export function writeToSavedLocations(user, location) {

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import GoogleMapReact from 'google-map-react'
 import { fitBounds } from 'google-map-react/utils'
 import { connect } from 'react-redux'
+import { writeUserLocation } from 'api/firebase'
 import { bindActionCreators } from 'redux'
 import { updateUserLocation, updateBounds } from 'redux/modules/location'
 import Spinner from 'react-spinkit'
@@ -20,6 +21,7 @@ class GoogleMap extends Component {
     updateUserLocation: PropTypes.func.isRequired,
     updateBounds: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
+    userLocation: PropTypes.object.isRequired,
     dest: PropTypes.object.isRequired,
   }
 
@@ -34,17 +36,30 @@ class GoogleMap extends Component {
   }
 
   /**
-  * Checks for geolocation support and asks user
+  * Checks for geolocation support and asks userLocation
   * to provide their location
   * @method componentDidMount
   */
   componentDidMount() {
     if (navigator.geolocation) {
       navigator.geolocation.watchPosition(({ coords }) => {
+        /**
+         * Update location in redux
+         */
         this.props.updateUserLocation({
           lat: coords.latitude,
           lng: coords.longitude,
         })
+
+        /**
+         * Update location in firebase
+         */
+        if (this.props.user) {
+          writeUserLocation(this.props.user, {
+            lat: coords.latitude,
+            lng: coords.longitude,
+          })
+        }
       })
     } else {
       alert('This app ain\'t gonna work without your location!')
@@ -75,7 +90,7 @@ class GoogleMap extends Component {
         <GoogleMapReact
           ref={(c) => { this.map = c }}
           onChange={this.handleOnChange}
-          center={this.props.user}
+          center={this.props.userLocation}
           defaultZoom={15}
           zoom={this.state.zoom}
           onGoogleApiLoaded={({ map, maps }) => this.handleMaps(map, maps)}
@@ -88,7 +103,7 @@ class GoogleMap extends Component {
             disableDefaultUI: true,
           }}
         >
-          <GoogleMarkerUser {...this.props.user} />
+          <GoogleMarkerUser {...this.props.userLocation} />
           {this.props.dest.lng && this.props.dest.lat &&
             <GoogleMarker lat={this.props.dest.lat} lng={this.props.dest.lng} />
           }
@@ -98,10 +113,11 @@ class GoogleMap extends Component {
   }
 }
 
-function mapStateToProps({ location }) {
+function mapStateToProps({ location, auth }) {
   return {
-    user: location.user,
+    userLocation: location.user,
     dest: location.dest,
+    user: auth.user,
   }
 }
 
