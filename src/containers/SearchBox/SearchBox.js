@@ -31,7 +31,10 @@ class SearchBox extends Component {
 
   onPlacesChanged = () => {
     const place = this.searchBox.getPlaces()
+    console.log(place);
     this.props.updateDestinationLocation({
+      name: place[0].name,
+      id: place[0].id,
       lat: place[0].geometry.location.lat(),
       lng: place[0].geometry.location.lng(),
     })

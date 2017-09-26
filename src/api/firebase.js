@@ -13,15 +13,21 @@ firebase.initializeApp(config)
 
 export const provider = new firebase.auth.GoogleAuthProvider()
 export const auth = firebase.auth()
-export const databse = firebase.database()
+export const database = firebase.database()
 
 
 export default firebase
 
 
 export function writeUserData(user) {
-  firebase.database().ref(`users/${user.uid}`).set({
+  database.ref(`users/${user.uid}`).set({
     username: user.displayName,
     uid: user.uid,
+  });
+}
+
+export function writeToSavedLocations(user, location) {
+  database.ref(`users/${user.uid}/favourites`).update({
+    [location.id]: { ...location },
   });
 }

@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import Menu from 'material-ui/svg-icons/navigation/menu'
 import styled from 'styled-components'
 import Drawer from 'material-ui/Drawer'
 import MenuItem from 'material-ui/MenuItem'
 import AppBar from 'material-ui/AppBar'
-import { SearchBox, SignInSignOut } from 'containers'
+import { SearchBox, SignInSignOut, SaveLocation } from 'containers'
 
 const TriggerWrapper = styled.div`
   transform: translate(1.5em, -1.5em);
@@ -44,8 +43,8 @@ class NavBar extends Component {
             <SignInSignOut />
           </MenuItem>
 
-          <MenuItem onClick={this.handleClose}>
-            {/* <SaveLocation /> */}
+          <MenuItem>
+            <SaveLocation />
           </MenuItem>
 
           <MenuItem onClick={this.handleClose}>Menu Item 2</MenuItem>

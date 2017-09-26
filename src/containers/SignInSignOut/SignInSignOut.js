@@ -38,7 +38,6 @@ class SignInSignOut extends Component {
         <FlatButton
           label='Sign out'
           onClick={this.handleSignOut}
-          fullWidth
           primary
           icon={
             <Avatar
@@ -51,7 +50,6 @@ class SignInSignOut extends Component {
         <FlatButton
           label='Sign In'
           onClick={this.handleSignIn}
-          fullWidth
           primary
         />
     )
