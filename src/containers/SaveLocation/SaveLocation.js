@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { auth, provider, writeToSavedLocations } from 'api/firebase'
+import { writeToSavedLocations } from 'api/firebase'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import FlatButton from 'material-ui/FlatButton'
@@ -11,6 +11,7 @@ class SaveLocation extends Component {
       PropTypes.object,
       PropTypes.bool,
     ]).isRequired,
+    destination: PropTypes.object.isRequired,
   }
 
   handleSaveLocation = () => writeToSavedLocations(this.props.user, this.props.destination)
