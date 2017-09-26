@@ -19,7 +19,10 @@ const styles = {
  */
 class MyPlaces extends React.Component {
   static propTypes = {
-    user: PropTypes.object.isRequired,
+    user: PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.bool,
+    ]).isRequired,
     updateDestinationLocation: PropTypes.func.isRequired,
   }
 
