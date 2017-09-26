@@ -6,6 +6,12 @@ import { bindActionCreators } from 'redux'
 import { signInSuccess, signOutSuccess } from 'redux/modules/auth'
 import Avatar from 'material-ui/Avatar'
 import FlatButton from 'material-ui/FlatButton'
+import styled from 'styled-components'
+
+const ButtonWrapper = styled.div`
+  color: white;
+  margin-top: 8px;
+`
 
 class SignInSignOut extends Component {
   static propTypes = {
@@ -34,24 +40,24 @@ class SignInSignOut extends Component {
 
   render() {
     return (
-      this.props.user ?
-        <FlatButton
-          label='Sign out'
-          onClick={this.handleSignOut}
-          primary
-          icon={
-            <Avatar
-              src={this.props.user.photoURL}
-              size={30}
-            />
-          }
-        />
-        :
-        <FlatButton
-          label='Sign In'
-          onClick={this.handleSignIn}
-          primary
-        />
+      <ButtonWrapper>
+        {this.props.user ?
+          <FlatButton
+            label='Sign out'
+            onClick={this.handleSignOut}
+            icon={
+              <Avatar
+                src={this.props.user.photoURL}
+                size={30}
+              />
+            }
+          />
+          :
+          <FlatButton
+            label='Sign In'
+            onClick={this.handleSignIn}
+          />}
+      </ButtonWrapper>
     )
   }
 }

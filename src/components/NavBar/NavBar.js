@@ -1,11 +1,17 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import Menu from 'material-ui/svg-icons/navigation/menu'
 import styled from 'styled-components'
 import Drawer from 'material-ui/Drawer'
 import MenuItem from 'material-ui/MenuItem'
 import AppBar from 'material-ui/AppBar'
-import { SearchBox, SignInSignOut, SaveLocation } from 'containers'
+import {
+  SearchBox,
+  SignInSignOut,
+  SaveLocation,
+  MyPlaces,
+} from 'containers'
 
 const TriggerWrapper = styled.div`
   transform: translate(1.5em, -1.5em);
@@ -34,17 +40,21 @@ class NavBar extends Component {
           open={this.state.open}
           onRequestChange={open => this.setState({ open })}
         >
-          <AppBar title='Bero' showMenuIconButton={false} />
+          <AppBar
+            title='Bero'
+            showMenuIconButton={false}
+            iconElementRight={<SignInSignOut />}
+          />
           <MenuItem>
             <SearchBox placeholder='Where are we going?' />
           </MenuItem>
 
           <MenuItem>
-            <SignInSignOut />
+            <SaveLocation />
           </MenuItem>
 
           <MenuItem>
-            <SaveLocation />
+            <MyPlaces />
           </MenuItem>
 
           <MenuItem onClick={this.handleClose}>Menu Item 2</MenuItem>

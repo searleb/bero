@@ -20,7 +20,7 @@ export default firebase
 
 
 export function writeUserData(user) {
-  database.ref(`users/${user.uid}`).set({
+  database.ref(`users/${user.uid}`).update({
     username: user.displayName,
     uid: user.uid,
   });
@@ -30,4 +30,8 @@ export function writeToSavedLocations(user, location) {
   database.ref(`users/${user.uid}/favourites`).update({
     [location.id]: { ...location },
   });
+}
+
+export function readSavedLocations(user, callback) {
+  database.ref(`users/${user.uid}/favourites`).on('value', snapshot => callback(snapshot.val()))
 }
