@@ -23,6 +23,7 @@ export function writeUserData(user) {
   database.ref(`users/${user.uid}`).update({
     username: user.displayName,
     uid: user.uid,
+    email: user.email,
   });
 }
 

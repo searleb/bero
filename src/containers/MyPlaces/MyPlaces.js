@@ -89,7 +89,7 @@ class MyPlaces extends React.Component {
           contentStyle={{ width: '100%', maxWidth: 'none' }}
         >
           <RadioButtonGroup name='places' onChange={this.handleNewLocation}>
-            {
+            { places &&
               Object.keys(places).map(key => (
                 <RadioButton
                   key={places[key].id}
